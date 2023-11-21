@@ -4,14 +4,17 @@
 
 using namespace std;
 
+//methods
+//deposit(int) - add to cash value
+//withdraw(int) - remove from cash value
+//history() - prints history of transactions
+ 
 int main(){
     auto ts = Account();
-    ts.Get_account_information();
+    ts.Deposit(50);
+    ts.Withdraw(25); 
 
-    cout << endl;
-
-    ts.Withdraw(50);
-    ts.Get_account_information();
+    ts.History();
 
     return 0;
 }
