@@ -1,5 +1,5 @@
-
 #include "trading_account.cpp"
+#include "market.cpp"
 #include<iostream>
 
 using namespace std;
@@ -10,7 +10,9 @@ using namespace std;
 //history() - prints history of transactions
  
 int main(){
+    
     auto ts = Account();
+
     ts.Deposit(50);
     ts.Withdraw(25); 
 

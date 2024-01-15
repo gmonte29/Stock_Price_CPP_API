@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <mutex>
+#include <shared_mutex>
 using namespace std;
 
 class instrument{
@@ -11,19 +12,19 @@ class instrument{
 
 public:
     instrument(string t, int s, float v): ticker(t), shares(s), val(v){} 
-    friend market;
+    friend class market;
 };
-
-
 
 class market{
     unordered_map<string, instrument> investments;
     int total_shares{0};
+    shared_mutex sm;
 
 public:
     //function for creating new stock investment;
-    void ipo(string ticker, int shares, int val){
+    void ipo(string ticker, int shares, float val){
         try{
+            lock_guard<shared_mutex> lg(sm);
             if(investments.count(ticker)!=0) throw exception();
             instrument i = instrument(ticker, shares, val);
             investments[ticker] = i;
@@ -32,16 +33,16 @@ public:
         catch(exception& e){
             cout << "exception " << e.what() << " found, ipo failed" << endl;
         }
-    
     }
 
-    //method for buying/selling stock
+    //method for changes in stock shares/value
     void stock_change(string ticker, int shares, bool buy){
-
         if(!buy) {
             stock_change(ticker, shares*-1, true);
             return;
         }
+
+        lock_guard<shared_mutex> lg(sm);
 
         investments[ticker].shares+=shares;
         total_shares+=shares;
@@ -52,8 +53,8 @@ public:
 
     //method for viewing stock info
     void view(string ticker){
-
-        cout << "stock name: "<< ticker << endl;
+        shared_lock<shared_mutex> sl(sm);
+        cout << "\nstock name: "<< ticker << endl;
         cout << "stock price: "<< investments[ticker].val << endl;
         cout << "shares outstanding: "<< investments[ticker].shares << endl;
     }

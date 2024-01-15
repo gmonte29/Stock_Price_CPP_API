@@ -2,6 +2,8 @@
 #include<vector>
 #include<utility>
 #include<iostream>
+#include <thread>
+#include "market.cpp"
 using namespace std;
  
 // Class created for binding
@@ -13,10 +15,13 @@ class Account {
  
     // Vector declared
     vector<pair<string, int> > transactions;
+
+    thread th;
  
-    public:
+public:
     //constructor
-    Account(): balance(50000), withdraw(0), deposit(0){}
+    Account(int bal=50000, market& m): balance(bal), withdraw(0), deposit(0){
+    }
     
     // Deposit Cash
     bool Deposit(int money)
