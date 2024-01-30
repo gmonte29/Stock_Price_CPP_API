@@ -8,7 +8,6 @@ using namespace std;
 //deposit(int) - add to cash value
 //withdraw(int) - remove from cash value
 //history() - prints history of transactions
- 
 int main(){
     
     auto ts = Account();
