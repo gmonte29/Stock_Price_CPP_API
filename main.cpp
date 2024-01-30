@@ -1,21 +1,14 @@
-#include "trading_account.cpp"
-#include "market.cpp"
-#include<iostream>
-
+#include <iostream>
+#include "stock_data.cpp"
 using namespace std;
+
 
 //methods
 //deposit(int) - add to cash value
 //withdraw(int) - remove from cash value
 //history() - prints history of transactions
 int main(){
-    
-    auto ts = Account();
-
-    ts.Deposit(50);
-    ts.Withdraw(25); 
-
-    ts.History();
+    cout << get_price("AAPL")<< endl;
 
     return 0;
 }
