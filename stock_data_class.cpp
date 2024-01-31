@@ -1,8 +1,12 @@
 #include <iostream>
 #include <string>
 #include <curl/curl.h>
+#include <mutex>
 #include <nlohmann/json.hpp> // Include the JSON library
 using namespace std;
+
+
+mutex m;
 
 static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
@@ -11,6 +15,7 @@ static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *use
 }
 
 float get_price(const string& ticker){
+    lock_guard<mutex> lg(m);
     string api = "4CFM0T26CVJY8437";
 
     string url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + ticker + "&apikey=" + api;
