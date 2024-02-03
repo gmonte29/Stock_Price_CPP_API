@@ -1,5 +1,4 @@
 #include <iostream>
-#include "stock_price_access.h"
 #include "stock_price_access.cpp"
 using namespace std;
 
@@ -8,10 +7,7 @@ using namespace std;
 //withdraw(int) - remove from cash value
 //history() - prints history of transactions
 int main(){
-    //421.88
     float price = get_price("QQQ");
-
     cout << price << endl;
-
     return 0;
 }

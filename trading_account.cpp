@@ -2,21 +2,27 @@
 #include <vector>
 #include <utility>
 #include <iostream>
-#include "stock_price_access.h"
+#include <unordered_map>
+#include <odb/core.hxx> // odb header for allowing various odb functions
+#include "stock_price_access.cpp"
 #include "buy_node.cpp"
 using namespace std;
 
+#pragma db object //pragma indiciates the class creates persistent objects
 class Account {
-    // available cash to trade with
     int balance;
- 
-    // dictionaries that hold information for each held ticker
+
+    #pragma db id auto//odb unique id declaration for mapping persistent opbjects to database
+    string username;
+
     unordered_map<string, buy_node*> holdings;
     unordered_map<string, int> holdings_quantity;
 
+    friend class odb::access; // makes class available to database support code
+
 public:
     //constructor
-    Account(int bal=50000): balance(bal){
+    Account(int bal=50000, string user): balance(bal), username(user){
     }
 
     //method for getting stock price
@@ -112,10 +118,10 @@ public:
             originalTotal += originalVal;
             newTotal += newVal;
 
-            cout << item.first << " ticker returns: " << newVal-originalVal << ", ticker performance: " << (newVal/originalVal-1) << endl;
+            cout << item.first << "Fair Market Value: "<< newVal << ", ticker returns: " << newVal-originalVal << ", ticker performance: " << (newVal/originalVal-1) << endl;
         }
 
-        cout << " total returns: " << newTotal-originalTotal << ", total performance: " << (newTotal/originalTotal-1) << endl;
+        cout << "Fair Market Value: " << newTotal << ", total returns: " << newTotal-originalTotal << ", total performance: " << (newTotal/originalTotal-1) << endl;
     }
     
     // Deposit Cash

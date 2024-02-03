@@ -3,7 +3,6 @@
 #include <curl/curl.h>
 #include <mutex>
 #include <nlohmann/json.hpp> // Include the JSON library
-#include "stock_price_access.h"
 using namespace std;
 
 mutex m;
