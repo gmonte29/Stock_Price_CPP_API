@@ -4,9 +4,11 @@ The program utilizes curl and AlphaVantage libraries to access stock prices
 
 Steps:
 1. Compile program
+
     g++ -std=c++17 -o main main.cpp -lcurl
 
 2. Run compiled code
+
     ./main
 
 3. Enter desired ticker in the terminal
